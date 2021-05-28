@@ -144,3 +144,43 @@ union
 from Stadium s, Stadium a, Stadium b
 where (s.id - a.id = 1 and a.id - b.id = 1) and 
     (s.people >= 100 and a.people >= 100 and b.people >= 100))
+
+
+/*
+596. Classes More Than 5 Students
+There is a table courses with columns: student and class
+
+Please list out all classes which have more than or equal to 5 students.
+
+For example, the table:
+
++---------+------------+
+| student | class      |
++---------+------------+
+| A       | Math       |
+| B       | English    |
+| C       | Math       |
+| D       | Biology    |
+| E       | Math       |
+| F       | Computer   |
+| G       | Math       |
+| H       | Math       |
+| I       | Math       |
++---------+------------+
+Should output:
+
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+*/
+
+with temp as
+(
+select distinct student, class from courses
+)
+select class
+    from temp
+    group by class
+    having count(class) >= 5
