@@ -29,3 +29,13 @@ from temp group by date) t
 where t.non_paying > t.paying
 order by t.date
 
+/*
+Salaries Differences
+Write a query that calculates the difference between the highest salaries found in the marketing and engineering departments. Output just the difference in salaries.
+Tables: db_employee, db_dept*/
+with temp as 
+(select department_id, max(e.salary)
+from db_employee e
+group by e.department_id)
+select (select max from temp where department_id = 4) - (select max from temp where department_id = 1)
+
