@@ -50,3 +50,10 @@ select id, first_name, last_name, department_id, max(salary) as current_salary
 from ms_employee_salary
 group by id, first_name, last_name, department_id
 order by id;
+
+/*
+Top Search Results
+You're given a table that contains search results. If the 'position' column represents the position of the search results,
+write a query to calculate the percentage of search results that were in the top 3 position.
+*/
+select (cast ((select count(position) from fb_search_results where position < 4) as float)/(select count(position) from fb_search_results) * 100) as top_3_percentage;
