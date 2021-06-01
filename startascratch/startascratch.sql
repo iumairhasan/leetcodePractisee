@@ -170,3 +170,12 @@ group by state
 order by 2 desc, 1 asc
 limit 5;
 
+/*
+Average Salaries
+Compare each employee's salary with the average salary of the corresponding department.
+Output the department, first name, and salary of employees along with the average salary of that department.
+*/
+select department, first_name, salary, (select avg(salary) from employee e1 where e1.department = e2.department group by e1.department) as avg_sal
+from employee e2
+group by department, first_name, salary;
+
