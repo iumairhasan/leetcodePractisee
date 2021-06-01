@@ -144,3 +144,15 @@ select business_name, review_text
 from (select * from yelp_reviews y where y.cool = (select max(y2.cool) from yelp_reviews y2)) t
 order by cool desc
 
+
+/*
+Reviews of Categories
+Find the top business categories based on the total number of reviews. 
+Output the category along with the total number of reviews. Order by total reviews in descending order.
+*/
+select category, sum(review_count)
+from (select unnest(string_to_array(categories, ';')) as category, review_count
+from yelp_business) temp
+group by 1
+order by 2 desc
+
