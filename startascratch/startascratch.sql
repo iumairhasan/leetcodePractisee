@@ -74,3 +74,29 @@ from
 group by f1.date
 order by f1.date
 
+
+/*
+Popularity Percentage
+Find the popularity percentage for each user on Facebook. The popularity percentage is defined as the total number of friends 
+the user has divided by the total number of users on the platform, then converted into a percentage by multiplying by 100.
+Output each user along with their popularity percentage. Order records in ascending order by user id.
+The 'user1' and 'user2' column are pairs of friends.
+*/
+with temp2 as 
+(select * from facebook_friends
+union
+select user2, user1 from facebook_friends),
+temp1 as(
+select user1 from facebook_friends
+union
+select user2 from facebook_friends
+),
+temp3 as
+(select t2.user1, count(user2) as co
+from temp2 t2
+group by t2.user1)
+select t3.user1, (cast(t3.co as float)/count(temp1.user1))*100 as percentage
+from temp3 t3, temp1
+group by t3.user1, t3.co
+order by t3.user1
+
