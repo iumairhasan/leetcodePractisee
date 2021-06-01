@@ -156,3 +156,17 @@ from yelp_business) temp
 group by 1
 order by 2 desc
 
+
+/*
+Top 5 States With 5 Star Businesses
+Find the top 5 states with the most 5 star businesses. Output the state name along with the number of 
+5-star businesses and order records by the number of 5-star businesses in descending order. 
+In case there are two states with the same result, sort them in alphabetical order.
+*/
+select state, count(stars) as co
+from yelp_business
+where stars = 5
+group by state
+order by 2 desc, 1 asc
+limit 5;
+
