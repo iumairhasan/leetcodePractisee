@@ -57,3 +57,20 @@ You're given a table that contains search results. If the 'position' column repr
 write a query to calculate the percentage of search results that were in the top 3 position.
 */
 select (cast ((select count(position) from fb_search_results where position < 4) as float)/(select count(position) from fb_search_results) * 100) as top_3_percentage;
+
+/*
+Acceptance Rate By Date
+What is the overall friend acceptance rate by date? Your output should have the rate of acceptances by the date the request was sent. Order by the earliest date to latest.
+
+Assume that each friend request starts by a user sending (i.e., user_id_sender) a friend request to another user (i.e., user_id_receiver) that's logged in the table with
+ action = 'sent'. If the request is accepted, the table logs action = 'accepted'. If the request is not accepted, no record of action = 'accepted' is logged.
+*/
+
+select f1.date, cast(count(f2.user_id_sender) as float)/count(f1.user_id_sender)
+from 
+    (select * from fb_friend_requests where action = 'sent') f1
+    left join (select * from fb_friend_requests where action = 'accepted') f2
+    on (f1.user_id_sender = f2.user_id_sender) and (f1.user_id_receiver = f2.user_id_receiver)
+group by f1.date
+order by f1.date
+
