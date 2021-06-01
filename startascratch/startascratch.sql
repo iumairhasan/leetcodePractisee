@@ -134,3 +134,13 @@ join facebook_hack_survey hack
 on emp.id = hack.employee_id
 group by emp.location;
 
+
+/*
+Top Cool Votes
+Find the business and the review_text that received the highest number of  'cool' votes.
+Output the business name along with the review text.
+*/
+select business_name, review_text
+from (select * from yelp_reviews y where y.cool = (select max(y2.cool) from yelp_reviews y2)) t
+order by cool desc
+
