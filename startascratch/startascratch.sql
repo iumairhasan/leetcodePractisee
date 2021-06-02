@@ -211,3 +211,17 @@ on c.id = o.cust_id
 where c.first_name in ('Jill', 'Eva')
 order by c.id asc;
 
+/*
+Highest Number Of Orders
+Find the customer who has placed the highest number of orders. 
+Output the first name of the customer along with the corresponding number of orders.
+ Sort records by the order count in descending order.
+*/
+select c.first_name, count(o.cust_id) as coun
+from customers c
+join orders o
+on c.id = o.cust_id
+group by c.first_name
+having count(o.cust_id) = (select max(co) from (select count(cust_id) over (partition by cust_id) as co from orders) t)
+order by 2 desc;
+
