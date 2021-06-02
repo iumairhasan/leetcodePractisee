@@ -179,3 +179,20 @@ select department, first_name, salary, (select avg(salary) from employee e1 wher
 from employee e2
 group by department, first_name, salary;
 
+
+/*
+Highest Cost Orders
+Find the customer with the highest total order cost between 2019-02-01 to 2019-05-01. Output their first name, 
+total cost of their items, and the date.
+
+For simplicity, you can assume that every first name in the dataset is unique.
+*/
+select c.first_name, sum(o.order_quantity * order_cost) as sum, o.order_date
+from customers c 
+join orders o
+on c.id = o.cust_id
+where o.order_date between '2019-02-01' and '2019-05-01'
+group by c.first_name, o.order_date
+having sum(o.order_quantity * order_cost) = (select max(su) from (select sum(order_quantity * order_cost) as su from orders group by cust_id, order_date) t) 
+order by 2 desc;
+
