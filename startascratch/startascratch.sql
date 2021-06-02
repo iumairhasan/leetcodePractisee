@@ -196,3 +196,18 @@ group by c.first_name, o.order_date
 having sum(o.order_quantity * order_cost) = (select max(su) from (select sum(order_quantity * order_cost) as su from orders group by cust_id, order_date) t) 
 order by 2 desc;
 
+/*
+Order Details
+Find order details made by Jill and Eva.
+Consider the Jill and Eva as first names of customers.
+Output the order date, details and cost along with the first name.
+Order records based on the customer id in ascending order.
+*/
+
+select c.first_name, o.order_date, order_details, order_cost
+from customers c
+join orders o
+on c.id = o.cust_id
+where c.first_name in ('Jill', 'Eva')
+order by c.id asc;
+
