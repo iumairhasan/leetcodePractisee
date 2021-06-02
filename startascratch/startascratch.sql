@@ -225,3 +225,15 @@ group by c.first_name
 having count(o.cust_id) = (select max(co) from (select count(cust_id) over (partition by cust_id) as co from orders) t)
 order by 2 desc;
 
+/*
+Highest Target Under Manager
+Find the highest target achieved by the employee or employees who works under the manager id 13. 
+Output the first name of the employee and target achieved. The solution should show the highest 
+target achieved under manager_id=13 and which employee(s) achieved it.
+*/
+select first_name, max(target)
+from salesforce_employees
+where manager_id = 13
+group by first_name, manager_id
+having max(target) = (select max(s.target) from salesforce_employees s group by s.manager_id having s.manager_id = 13);
+
