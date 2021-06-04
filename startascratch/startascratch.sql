@@ -237,3 +237,15 @@ where manager_id = 13
 group by first_name, manager_id
 having max(target) = (select max(s.target) from salesforce_employees s group by s.manager_id having s.manager_id = 13);
 
+/*
+Customer Revenue In March
+Calculate the total revenue from each customer in March 2019. Revenue for each order is calculated by multiplying the order_quantity with the order_cost.
+Output the revenue along with the customer id and sort the results based on the revenue in descending order.
+*/
+
+select  sum(order_quantity*order_cost), cust_id
+from orders
+where order_date between '2019-03-01' and '2019-03-31'
+group by 2
+order by 1 desc;
+
