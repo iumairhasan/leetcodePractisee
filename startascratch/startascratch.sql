@@ -264,3 +264,13 @@ left join orders s
 on c.id = s.cust_id
 order by 1, 4 asc;
 
+/*
+Employee and Manager Salaries
+Find employees who are earning more than their managers. Output the employee name along with the corresponding salary.
+*/
+
+select e.first_name, e.salary, m.salary from employee e
+inner join employee m
+on m.id = e.manager_id
+where e.salary > m.salary
+
